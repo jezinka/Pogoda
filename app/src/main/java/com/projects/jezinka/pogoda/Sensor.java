@@ -1,19 +1,20 @@
 package com.projects.jezinka.pogoda;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 public class Sensor {
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
     private long id;
     String label;
     double temperature;
-    String timestamp;
+    long timestamp;
+    int humidity;
+    double lux;
+    Double barPressing;
+    double vbat, vreg;
 
     public long getId() {
         return id;
@@ -23,7 +24,15 @@ public class Sensor {
 
         this.id = Long.valueOf(entry.getKey());
         this.label = label;
-        this.temperature = entry.getValue().getAsJsonObject().get("hum_temp").getAsDouble();
-        this.timestamp = formatter.format(new Date(entry.getValue().getAsJsonObject().get("stamp").getAsLong() * 1000));
+
+        JsonObject measurement = entry.getValue().getAsJsonObject();
+
+        this.temperature = measurement.get("hum_temp").getAsDouble();
+        this.timestamp = measurement.get("stamp").getAsLong() * 1000;
+        this.humidity = measurement.get("hum_hum").getAsInt();
+        this.lux = measurement.get("lux").getAsDouble();
+        this.barPressing = measurement.get("bar_pres_rel").isJsonNull() ? null : measurement.get("bar_pres_rel").getAsDouble();
+        this.vbat = measurement.get("vbat").getAsDouble();
+        this.vreg = measurement.get("vreg").getAsDouble();
     }
 }
