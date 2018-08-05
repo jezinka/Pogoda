@@ -3,10 +3,14 @@ package com.projects.jezinka.pogoda;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.gson.JsonElement;
@@ -21,6 +25,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private SensorsAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +33,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         adapter = new SensorsAdapter(this);
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.list);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setHasFixedSize(true);
+
+        swipeRefreshLayout = findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i("Main", "onRefresh called from SwipeRefreshLayout");
+                        sendQueryForData();
+                    }
+
+                }
+        );
 
         sendQueryForData();
     }
@@ -51,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     Sensor[] sensors = createSensorsFromJsonObject(body);
                     adapter.updateResults(sensors);
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -73,5 +91,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return sensors;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_refresh, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            // Check if user triggered a refresh:
+            case R.id.menu_refresh:
+                Log.i("Main", "Refresh menu item selected");
+
+                // Signal SwipeRefreshLayout to start the progress indicator
+                swipeRefreshLayout.setRefreshing(true);
+
+                // Start the refresh background task.
+                // This method calls setRefreshing(false) when it's finished.
+                sendQueryForData();
+
+                return true;
+        }
+
+        // User didn't trigger a refresh, let the superclass handle this action
+        return super.onOptionsItemSelected(item);
+
     }
 }
