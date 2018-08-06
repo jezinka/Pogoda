@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        Log.i("Main", "onRefresh called from SwipeRefreshLayout");
                         sendQueryForData();
                     }
 
@@ -104,17 +103,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            // Check if user triggered a refresh:
             case R.id.menu_refresh:
-                Log.i("Main", "Refresh menu item selected");
-
-                // Signal SwipeRefreshLayout to start the progress indicator
                 swipeRefreshLayout.setRefreshing(true);
-
-                // Start the refresh background task.
-                // This method calls setRefreshing(false) when it's finished.
                 sendQueryForData();
-
                 return true;
         }
 
