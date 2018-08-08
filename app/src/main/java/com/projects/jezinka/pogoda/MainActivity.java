@@ -24,6 +24,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int SPAN_COUNT = 2;
+
     private SensorsAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.list);
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, SPAN_COUNT));
         recyclerView.setHasFixedSize(true);
 
         swipeRefreshLayout = findViewById(R.id.swiperefresh);
@@ -73,18 +75,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 Log.e("MAIN", t.getLocalizedMessage());
-                Toast.makeText(mContext, "connection Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private Sensor[] createSensorsFromJsonObject(JsonObject body) {
-        int sensorsSize = body.getAsJsonObject("readings").entrySet().size();
+        int sensorsSize = body.getAsJsonObject(getString(R.string.readings)).entrySet().size();
         Sensor[] sensors = new Sensor[sensorsSize];
 
         int i = 0;
-        for (Map.Entry<String, JsonElement> entry : body.getAsJsonObject("readings").entrySet()) {
-            String label = body.getAsJsonObject("sensors").get(entry.getKey()).getAsJsonObject().get("label").toString().replaceAll("\"", "");
+        for (Map.Entry<String, JsonElement> entry : body.getAsJsonObject(getString(R.string.readings)).entrySet()) {
+            String label = body.getAsJsonObject(getString(R.string.sensors)).get(entry.getKey()).getAsJsonObject().get(getString(R.string.label)).toString().replaceAll("\"", "");
             sensors[i] = new Sensor(entry, label);
             i++;
         }
