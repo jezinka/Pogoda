@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHolder> {
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -18,23 +20,19 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
 
 
     private Context mContext;
-    private Sensor[] mSensor;
+    private List<Sensor> mSensor;
 
     public SensorsAdapter(Context c) {
         mContext = c;
-        mSensor = new Sensor[0];
-    }
-
-    public Context getContext() {
-        return this.mContext;
+        mSensor = new ArrayList<>();
     }
 
     public int getItemCount() {
-        return mSensor.length;
+        return mSensor.size();
     }
 
     private Sensor getItem(int position) {
-        return this.mSensor[position];
+        return this.mSensor.get(position);
     }
 
     @Override
@@ -49,7 +47,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Sensor sensor = mSensor[position];
+        final Sensor sensor = getItem(position);
 
         holder.label.setText(sensor.label);
         holder.temperature.setText(TextUtils.concat(String.valueOf(sensor.temperature), "\u00B0C"));
@@ -73,7 +71,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
         return this.getItem(position).getId();
     }
 
-    public void updateResults(Sensor[] results) {
+    public void updateResults(List<Sensor> results) {
         this.mSensor = results;
         this.notifyDataSetChanged();
     }

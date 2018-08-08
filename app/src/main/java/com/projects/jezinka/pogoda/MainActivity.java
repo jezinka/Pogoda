@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onRefresh() {
                         sendQueryForData();
                     }
-
                 }
         );
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                 JsonObject body = response.body();
                 if (body != null) {
-                    Sensor[] sensors = createSensorsFromJsonObject(body);
+                    List<Sensor> sensors = createSensorsFromJsonObject(body);
                     adapter.updateResults(sensors);
                 }
                 swipeRefreshLayout.setRefreshing(false);
@@ -80,15 +81,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private Sensor[] createSensorsFromJsonObject(JsonObject body) {
-        int sensorsSize = body.getAsJsonObject(getString(R.string.readings)).entrySet().size();
-        Sensor[] sensors = new Sensor[sensorsSize];
+    private List<Sensor> createSensorsFromJsonObject(JsonObject body) {
+        List<Sensor> sensors = new ArrayList<>();
 
-        int i = 0;
         for (Map.Entry<String, JsonElement> entry : body.getAsJsonObject(getString(R.string.readings)).entrySet()) {
             String label = body.getAsJsonObject(getString(R.string.sensors)).get(entry.getKey()).getAsJsonObject().get(getString(R.string.label)).toString().replaceAll("\"", "");
-            sensors[i] = new Sensor(entry, label);
-            i++;
+            sensors.add(new Sensor(entry, label));
         }
 
         return sensors;
@@ -113,6 +111,5 @@ public class MainActivity extends AppCompatActivity {
 
         // User didn't trigger a refresh, let the superclass handle this action
         return super.onOptionsItemSelected(item);
-
     }
 }
