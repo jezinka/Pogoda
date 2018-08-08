@@ -1,51 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:orientation="vertical">
+    android:layout_margin="@dimen/margin_size"
+    android:background="@color/colorPrimaryLight"
+    android:elevation="4dp">
 
     <TextView
         android:id="@+id/label_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="6dp"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/colorPrimaryDark"
-        android:elevation="6dp"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight"
-        android:elevation="4dp"
-        android:orientation="vertical"
-        android:paddingTop="8dp">
+    <ImageView
+        android:id="@+id/temperature_icon"
+        android:layout_width="@dimen/image_width"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginStart="@dimen/margin_size"
+        android:layout_marginTop="@dimen/margin_size"
+        android:contentDescription="@string/temperature_icon"
+        android:src="@drawable/ic_low_temperature"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_tv" />
 
-        <ImageView
-            android:id="@+id/temperature_icon"
-            android:layout_width="@dimen/image_width"
-            android:layout_height="@dimen/item_height"
-            android:layout_marginStart="@dimen/margin_size"
-            android:contentDescription="@string/temperature_icon"
-            android:src="@drawable/ic_low_temperature"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/temperature_tv"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/item_height"
-            android:layout_marginEnd="@dimen/margin_size"
-            android:layout_marginStart="@dimen/margin_size"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/temperature_tv"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginEnd="@dimen/margin_size"
+        android:layout_marginStart="@dimen/margin_size"
+        android:layout_marginTop="@dimen/margin_size"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/label_tv" />
 
         <ImageView
             android:id="@+id/humidity_icon"
@@ -127,7 +123,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pressure_icon" />
 
-
         <TextView
             android:id="@+id/battery_tv"
             android:layout_width="0dp"
@@ -156,10 +151,10 @@
         <TextView
             android:id="@+id/timestamp_tv"
             android:layout_width="0dp"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_size"
             android:background="@android:color/white"
-            android:elevation="4dp"
+            android:elevation="2dp"
             android:paddingLeft="@dimen/padding_size"
             android:paddingRight="@dimen/padding_size"
             android:textAlignment="center"
@@ -169,5 +164,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/battery_tv" />
 
-    </android.support.constraint.ConstraintLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
