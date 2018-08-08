@@ -1,157 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    android:background="#fff"
-    android:backgroundTint="@color/colorPrimaryLight"
-    android:elevation="8dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/label_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="6dp"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/temperature_icon"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="@string/temperature_icon"
-        android:src="@drawable/ic_low_temperature"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_tv" />
-
-    <TextView
-        android:id="@+id/temperature_tv"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/temperature_icon"
-        app:layout_constraintTop_toBottomOf="@+id/label_tv" />
-
-    <ImageView
-        android:id="@+id/humidity_icon"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="@string/humidity_icon"
-        android:src="@drawable/ic_humidity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temperature_icon" />
-
-    <TextView
-        android:id="@+id/humidity_tv"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/humidity_icon"
-        app:layout_constraintTop_toBottomOf="@+id/temperature_tv" />
-
-    <ImageView
-        android:id="@+id/lux_icon"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="@string/lux_icon"
-        android:src="@drawable/ic_brightness"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/humidity_icon" />
-
-    <TextView
-        android:id="@+id/lux_tv"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lux_icon"
-        app:layout_constraintTop_toBottomOf="@+id/humidity_tv" />
-
-    <ImageView
-        android:id="@+id/pressure_icon"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="@string/pressure_icon"
-        android:src="@drawable/ic_barometer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lux_icon" />
-
-    <TextView
-        android:id="@+id/bar_press_tv"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pressure_icon"
-        app:layout_constraintTop_toBottomOf="@+id/lux_tv" />
-
-    <ImageView
-        android:id="@+id/battery_icon"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="@string/battery_icon"
-        android:src="@drawable/ic_battery"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pressure_icon" />
-
-
-    <TextView
-        android:id="@+id/battery_tv"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/battery_icon"
-        app:layout_constraintTop_toBottomOf="@+id/bar_press_tv" />
-
-    <TextView
-        android:id="@+id/timestamp_tv"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:elevation="20dp"
-        android:textAlignment="textEnd"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/battery_tv" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryLight"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
 
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/temperature_icon"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginStart="@dimen/margin_size"
+            android:contentDescription="@string/temperature_icon"
+            android:src="@drawable/ic_low_temperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/temperature_tv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginEnd="@dimen/margin_size"
+            android:layout_marginStart="@dimen/margin_size"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/humidity_icon"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:contentDescription="@string/humidity_icon"
+            android:src="@drawable/ic_humidity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperature_icon" />
+
+        <TextView
+            android:id="@+id/humidity_tv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginEnd="@dimen/margin_size"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/temperature_tv" />
+
+        <ImageView
+            android:id="@+id/lux_icon"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:contentDescription="@string/lux_icon"
+            android:src="@drawable/ic_brightness"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/humidity_icon" />
+
+        <TextView
+            android:id="@+id/lux_tv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginEnd="@dimen/margin_size"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/humidity_tv" />
+
+        <ImageView
+            android:id="@+id/pressure_icon"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:contentDescription="@string/pressure_icon"
+            android:src="@drawable/ic_barometer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lux_icon" />
+
+        <TextView
+            android:id="@+id/bar_press_tv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginEnd="@dimen/margin_size"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/lux_tv" />
+
+        <ImageView
+            android:id="@+id/battery_icon"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:contentDescription="@string/battery_icon"
+            android:src="@drawable/ic_battery"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pressure_icon" />
+
+
+        <TextView
+            android:id="@+id/battery_tv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginEnd="@dimen/margin_size"
+            android:layout_marginStart="@dimen/margin_size"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/bar_press_tv" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="44dp" />
+
+        <android.support.constraint.Group
+            android:id="@+id/pressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="bar_press_tv,pressure_icon" />
+
+        <TextView
+            android:id="@+id/timestamp_tv"
+            android:layout_width="0dp"
+            android:layout_height="23dp"
+            android:layout_margin="@dimen/margin_size"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:paddingLeft="@dimen/padding_size"
+            android:paddingRight="@dimen/padding_size"
+            android:textAlignment="center"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/battery_tv" />
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

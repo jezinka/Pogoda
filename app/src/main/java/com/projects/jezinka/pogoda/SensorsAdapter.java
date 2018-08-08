@@ -1,12 +1,12 @@
 package com.projects.jezinka.pogoda;
 
 import android.content.Context;
+import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -57,11 +57,8 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
 
         if (sensor.barPressing != null) {
             holder.barPress.setText(TextUtils.concat(df.format(sensor.barPressing), mContext.getString(R.string.pressure)));
-            holder.barPress.setVisibility(View.VISIBLE);
-            holder.pressureIcon.setVisibility(View.VISIBLE);
         } else {
-            holder.barPress.setVisibility(View.INVISIBLE);
-            holder.pressureIcon.setVisibility(View.INVISIBLE);
+            holder.pressure.setVisibility(View.INVISIBLE);
         }
 
         holder.battery.setText(TextUtils.concat(df.format(sensor.vbat), mContext.getString(R.string.volt), "/", df.format(sensor.vreg), mContext.getString(R.string.volt)));
@@ -84,8 +81,9 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
         TextView humidity;
         TextView lux;
         TextView barPress;
-        ImageView pressureIcon;
         TextView battery;
+
+        Group pressure;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -96,8 +94,9 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
             humidity = itemView.findViewById(R.id.humidity_tv);
             lux = itemView.findViewById(R.id.lux_tv);
             barPress = itemView.findViewById(R.id.bar_press_tv);
-            pressureIcon = itemView.findViewById(R.id.pressure_icon);
             battery = itemView.findViewById(R.id.battery_tv);
+
+            pressure = itemView.findViewById(R.id.pressure);
         }
     }
 }
