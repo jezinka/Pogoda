@@ -3,27 +3,19 @@ package com.projects.jezinka.pogoda;
 import android.content.Context;
 import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHolder> {
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    private static DecimalFormat df = new DecimalFormat("####0.00");
 
-
-    private Context mContext;
     private List<Sensor> mSensor;
 
-    public SensorsAdapter(Context c) {
-        mContext = c;
+    SensorsAdapter() {
         mSensor = new ArrayList<>();
     }
 
@@ -49,19 +41,19 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Sensor sensor = getItem(position);
 
-        holder.label.setText(sensor.label);
-        holder.temperature.setText(TextUtils.concat(String.valueOf(sensor.temperature), "\u00B0C"));
-        holder.timestamp.setText(formatter.format(sensor.timestamp));
-        holder.humidity.setText(TextUtils.concat(String.valueOf(sensor.humidity), "%"));
-        holder.lux.setText(TextUtils.concat(df.format(sensor.lux), " lx"));
+        holder.label.setText(sensor.getLabel());
+        holder.temperature.setText(sensor.getTemperature());
+        holder.timestamp.setText(sensor.getTimestamp());
+        holder.humidity.setText(sensor.getHumidity());
+        holder.lux.setText(sensor.getLux());
 
-        if (sensor.barPressing != null) {
-            holder.barPress.setText(TextUtils.concat(df.format(sensor.barPressing), mContext.getString(R.string.pressure)));
+        if (!sensor.isBarPressureNull()) {
+            holder.barPress.setText(sensor.getBarPressure());
         } else {
-            holder.pressure.setVisibility(View.INVISIBLE);
+            holder.pressureGroup.setVisibility(View.INVISIBLE);
         }
 
-        holder.battery.setText(TextUtils.concat(df.format(sensor.vbat), mContext.getString(R.string.volt), "/", df.format(sensor.vreg), mContext.getString(R.string.volt)));
+        holder.battery.setText(sensor.getVbatVreg());
     }
 
     public long getItemId(int position) {
@@ -83,7 +75,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
         TextView barPress;
         TextView battery;
 
-        Group pressure;
+        Group pressureGroup;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -96,7 +88,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
             barPress = itemView.findViewById(R.id.bar_press_tv);
             battery = itemView.findViewById(R.id.battery_tv);
 
-            pressure = itemView.findViewById(R.id.pressure);
+            pressureGroup = itemView.findViewById(R.id.pressure_group);
         }
     }
 }

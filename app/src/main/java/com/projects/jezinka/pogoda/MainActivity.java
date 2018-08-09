@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new SensorsAdapter(this);
+        adapter = new SensorsAdapter();
         RecyclerView recyclerView = findViewById(R.id.list);
 
         recyclerView.setAdapter(adapter);
@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Log.e("MAIN", t.getLocalizedMessage());
+                swipeRefreshLayout.setRefreshing(false);
+                Log.e("LOAD_DATA", t.getLocalizedMessage());
                 Toast.makeText(mContext, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
@@ -85,11 +86,20 @@ public class MainActivity extends AppCompatActivity {
         List<Sensor> sensors = new ArrayList<>();
 
         for (Map.Entry<String, JsonElement> entry : body.getAsJsonObject(getString(R.string.readings)).entrySet()) {
-            String label = body.getAsJsonObject(getString(R.string.sensors)).get(entry.getKey()).getAsJsonObject().get(getString(R.string.label)).toString().replaceAll("\"", "");
+            String label = getLabelFromJson(body, entry.getKey());
             sensors.add(new Sensor(entry, label));
         }
 
         return sensors;
+    }
+
+    private String getLabelFromJson(JsonObject body, String key) {
+        return body
+                .getAsJsonObject(getString(R.string.sensors))
+                .getAsJsonObject(key)
+                .get(getString(R.string.label))
+                .toString()
+                .replaceAll("\"", "");
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface WeatherService {
     @GET("data.json")
     Call<JsonObject> loadData();
 
-    public static final Retrofit retrofit = new Retrofit.Builder()
+    Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BuildConfig.WEATHER_ADDRESS)
             .addConverterFactory(GsonConverterFactory.create())
             .build();

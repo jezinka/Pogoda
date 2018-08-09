@@ -5,10 +5,9 @@
     <string name="lux_icon">lux icon</string>
     <string name="humidity_icon">humidity icon</string>
     <string name="temperature_icon">temperature icon</string>
-    <string name="pressure">hPa</string>
-    <string name="volt">V</string>
     <string name="readings">readings</string>
     <string name="label">label</string>
     <string name="sensors">sensors</string>
     <string name="connection_error">Connection Error</string>
+    <string name="refresh">Refresh</string>
 </resources>

@@ -143,7 +143,7 @@
             app:layout_constraintGuide_begin="44dp" />
 
         <android.support.constraint.Group
-            android:id="@+id/pressure"
+            android:id="@+id/pressure_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="bar_press_tv,pressure_icon" />
