@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pogoda</string>
+    <string name="app_name">Sensorki</string>
     <string name="battery_icon">battery icon</string>
     <string name="pressure_icon">pressure icon</string>
     <string name="lux_icon">lux icon</string>
