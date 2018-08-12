@@ -1,8 +1,13 @@
 package com.projects.jezinka.pogoda;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,6 +32,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final int SPAN_COUNT = 2;
+    public static final String CHANNEL_ID = "S3N50R3K";
 
     private SensorsAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createNotificationChannel();
 
         adapter = new SensorsAdapter();
         RecyclerView recyclerView = findViewById(R.id.list);
@@ -69,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 if (body != null) {
                     List<Sensor> sensors = createSensorsFromJsonObject(body);
                     adapter.updateResults(sensors);
+                    checkBatteryState(sensors);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -80,6 +88,26 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(mContext, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void checkBatteryState(List<Sensor> sensors) {
+        for (Sensor sensor : sensors) {
+            if (sensor.batteryNeedRecharge()) {
+                sendNotification(sensor);
+            }
+        }
+    }
+
+    private void sendNotification(Sensor sensor) {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_battery)
+                .setContentTitle(getString(R.string.notification_title))
+                .setContentText(sensor.getLabel() + getString(R.string.notification_text))
+                .setAutoCancel(true)
+                .setOngoing(false);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify((int) sensor.getId(), mBuilder.build());
     }
 
     private List<Sensor> createSensorsFromJsonObject(JsonObject body) {
@@ -121,5 +149,21 @@ public class MainActivity extends AppCompatActivity {
 
         // User didn't trigger a refresh, let the superclass handle this action
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.sensor_channel);
+            String description = getString(R.string.sensor_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
     }
 }

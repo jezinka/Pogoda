@@ -10,4 +10,8 @@
     <string name="sensors">sensors</string>
     <string name="connection_error">Connection Error</string>
     <string name="refresh">Refresh</string>
+    <string name="notification_title">Nakarm Sensorka!</string>
+    <string name="notification_text">: bateria Sensorka wymaga naładowania!</string>
+    <string name="sensor_channel">sensorki channel</string>
+    <string name="sensor_description">Powiadomienia odnośnie sensorków</string>
 </resources>

@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +49,19 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
         holder.humidity.setText(sensor.getHumidity());
         holder.lux.setText(sensor.getLux());
 
+        holder.battery.setColorFilter(sensor.getBatteryColor());
+        holder.battery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), sensor.getVbatVreg(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         if (!sensor.isBarPressureNull()) {
             holder.barPress.setText(sensor.getBarPressure());
         } else {
             holder.pressureGroup.setVisibility(View.INVISIBLE);
         }
-
-        holder.battery.setText(sensor.getVbatVreg());
     }
 
     public long getItemId(int position) {
@@ -73,7 +81,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
         TextView humidity;
         TextView lux;
         TextView barPress;
-        TextView battery;
+        ImageView battery;
 
         Group pressureGroup;
 
@@ -86,7 +94,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
             humidity = itemView.findViewById(R.id.humidity_tv);
             lux = itemView.findViewById(R.id.lux_tv);
             barPress = itemView.findViewById(R.id.bar_press_tv);
-            battery = itemView.findViewById(R.id.battery_tv);
+            battery = itemView.findViewById(R.id.battery_icon);
 
             pressureGroup = itemView.findViewById(R.id.pressure_group);
         }
