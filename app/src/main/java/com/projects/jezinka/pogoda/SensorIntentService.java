@@ -39,9 +39,7 @@ public class SensorIntentService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_UPDATE_WIDGET.equals(action)) {
-                refreshWidget();
-            } else if (ACTION_REFRESH_WIDGET.equals(action)) {
+            if (ACTION_UPDATE_WIDGET.equals(action) || ACTION_REFRESH_WIDGET.equals(action)) {
                 refreshWidget();
             }
         }
