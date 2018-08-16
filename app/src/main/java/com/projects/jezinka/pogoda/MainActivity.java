@@ -114,20 +114,11 @@ public class MainActivity extends AppCompatActivity {
         List<Sensor> sensors = new ArrayList<>();
 
         for (Map.Entry<String, JsonElement> entry : body.getAsJsonObject(getString(R.string.readings)).entrySet()) {
-            String label = getLabelFromJson(body, entry.getKey());
+            String label = SensorJsonHelper.getLabelFromJson(body, entry.getKey());
             sensors.add(new Sensor(entry, label));
         }
 
         return sensors;
-    }
-
-    private String getLabelFromJson(JsonObject body, String key) {
-        return body
-                .getAsJsonObject(getString(R.string.sensors))
-                .getAsJsonObject(key)
-                .get(getString(R.string.label))
-                .toString()
-                .replaceAll("\"", "");
     }
 
     @Override
