@@ -47,7 +47,7 @@ public class Sensor {
     }
 
     public CharSequence getTemperature() {
-        return TextUtils.concat(String.valueOf(this.temperature), C_DEGREE);
+        return TextUtils.concat(String.valueOf(df.format(this.temperature)), C_DEGREE);
     }
 
     public CharSequence getTimestamp() {
