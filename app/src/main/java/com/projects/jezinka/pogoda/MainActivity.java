@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 if (body != null) {
                     List<Sensor> sensors = createSensorsFromJsonObject(body);
                     adapter.updateResults(sensors);
-                    checkBatteryState(sensors);
+                    checkSensorsState(sensors);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -90,19 +91,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void checkBatteryState(List<Sensor> sensors) {
+    private void checkSensorsState(List<Sensor> sensors) {
         for (Sensor sensor : sensors) {
-            if (sensor.batteryNeedRecharge()) {
-                sendNotification(sensor);
+            if (sensor.isSensorDead()) {
+                sendDeadSensorNotification(sensor);
+            } else if (sensor.batteryNeedRecharge()) {
+                sendRechargeNotification(sensor);
             }
         }
     }
 
-    private void sendNotification(Sensor sensor) {
+    private void sendDeadSensorNotification(Sensor sensor) {
+        CharSequence message = TextUtils.concat(sensor.getLabel(), getString(R.string.dead_sensor_notification_text), " ", sensor.getTimestamp());
+        sendNotification(sensor, getString(R.string.dead_sensor_notification_title), message);
+    }
+
+    private void sendRechargeNotification(Sensor sensor) {
+        CharSequence message = TextUtils.concat(sensor.getLabel(), getString(R.string.recharge_notification_text));
+        sendNotification(sensor, getString(R.string.recharge_notification_title), message);
+    }
+
+    private void sendNotification(Sensor sensor, String title, CharSequence message) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_battery)
-                .setContentTitle(getString(R.string.notification_title))
-                .setContentText(sensor.getLabel() + getString(R.string.notification_text))
+                .setContentTitle(title)
+                .setContentText(message)
                 .setAutoCancel(true)
                 .setOngoing(false);
 

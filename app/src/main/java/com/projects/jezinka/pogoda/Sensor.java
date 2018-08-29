@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class Sensor {
     private static final String C_DEGREE = "\u00B0C";
 
     private static final double CRITICAL_BATTERY_VOLTAGE = 3.0;
-    private static final double GOOD_BATTERY_VOLTAGE = 3.5;
-    private static final double VOLTAGE_BUFFOR = 0.1;
+    private static final double GOOD_BATTERY_VOLTAGE = 3.4;
+    private static final double VOLTAGE_BUFFOR = 0.2;
 
     private static DecimalFormat df = new DecimalFormat("####0.00");
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.CANADA);
@@ -51,7 +52,7 @@ public class Sensor {
     }
 
     public CharSequence getTimestamp() {
-        return formatter.format(this.timestamp * 1000);
+        return formatter.format(this.timestamp);
     }
 
     public CharSequence getHumidity() {
@@ -88,6 +89,13 @@ public class Sensor {
         return this.vbat <= CRITICAL_BATTERY_VOLTAGE;
     }
 
+    public boolean isSensorDead() {
+        return new Date().getTime() - this.timestamp > 3_600_000;
+    }
+
+    public Sensor() {
+    }
+
     Sensor(Map.Entry<String, JsonElement> entry, String label) {
 
         this.id = Long.valueOf(entry.getKey());
@@ -96,7 +104,7 @@ public class Sensor {
         JsonObject measurement = entry.getValue().getAsJsonObject();
 
         this.temperature = measurement.get("hum_temp").getAsDouble();
-        this.timestamp = measurement.get("stamp").getAsLong();
+        this.timestamp = measurement.get("stamp").getAsLong() * 1000;
         this.humidity = measurement.get("hum_hum").getAsInt();
         this.lux = measurement.get("lux").getAsDouble();
         this.barPressure = measurement.get("bar_pres_rel").isJsonNull() ? null : measurement.get("bar_pres_rel").getAsDouble();

@@ -1,6 +1,7 @@
 package com.projects.jezinka.pogoda;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,6 +62,11 @@ public class SensorsAdapter extends RecyclerView.Adapter<SensorsAdapter.ViewHold
             holder.barPress.setText(sensor.getBarPressure());
         } else {
             holder.pressureGroup.setVisibility(View.INVISIBLE);
+        }
+
+        if (sensor.isSensorDead()) {
+            holder.timestamp.setBackgroundColor(Color.RED);
+            holder.timestamp.setTextColor(Color.WHITE);
         }
     }
 

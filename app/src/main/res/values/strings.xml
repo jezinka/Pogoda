@@ -8,8 +8,10 @@
     <string name="readings">readings</string>
     <string name="connection_error">Bład połączenia</string>
     <string name="refresh">Odśwież</string>
-    <string name="notification_title">Nakarm Sensorka!</string>
-    <string name="notification_text">: bateria Sensorka wymaga naładowania!</string>
+    <string name="dead_sensor_notification_title">Sensorek poległ!</string>
+    <string name="dead_sensor_notification_text">: brak wiadomości od sensorka od </string>
+    <string name="recharge_notification_title">Nakarm Sensorka!</string>
+    <string name="recharge_notification_text">: bateria Sensorka wymaga naładowania!</string>
     <string name="sensor_channel">sensorki channel</string>
     <string name="sensor_description">Powiadomienia odnośnie sensorków</string>
     <string name="appwidget_text">Sensorek</string>
