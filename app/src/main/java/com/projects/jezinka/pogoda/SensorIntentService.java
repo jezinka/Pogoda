@@ -13,13 +13,23 @@ import android.widget.Toast;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import toothpick.Scope;
+import toothpick.Toothpick;
+import toothpick.config.Module;
 
 public class SensorIntentService extends IntentService {
+
+    @Inject
+    NotificationService notificationService;
 
     private static final String BALKON = "Balkon";
     private static final String ACTION_UPDATE_WIDGET = "com.projects.jezinka.pogoda.action.update";
@@ -27,6 +37,11 @@ public class SensorIntentService extends IntentService {
 
     public SensorIntentService() {
         super("SensorIntentService");
+        Scope appScope = Toothpick.openScope(this);
+        appScope.installModules(new Module() {{
+            bind(NotificationService.class).toInstance(new NotificationService());
+        }});
+        Toothpick.inject(this, appScope);
     }
 
     public static void startActionUpdateWidgets(Context context) {
@@ -75,11 +90,18 @@ public class SensorIntentService extends IntentService {
     }
 
     private Sensor createSensorsFromJsonObject(JsonObject body) {
-
+        List<Sensor> sensorList = new ArrayList<>();
         for (Map.Entry<String, JsonElement> entry : body.getAsJsonObject(getString(R.string.readings)).entrySet()) {
             String label = SensorJsonHelper.getLabelFromJson(body, entry.getKey());
-            if (label.equals(BALKON)) {
-                return new Sensor(entry, label);
+            Sensor sensor = new Sensor(entry, label);
+            sensorList.add(sensor);
+        }
+
+        notificationService.checkSensorsState(sensorList, this);
+
+        for (Sensor sensor : sensorList) {
+            if (sensor.getLabel().equals(BALKON)) {
+                return sensor;
             }
         }
         return null;
