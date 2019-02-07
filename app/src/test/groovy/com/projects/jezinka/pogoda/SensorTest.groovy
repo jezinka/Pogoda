@@ -24,8 +24,8 @@ class SensorTest extends Specification {
 
         where:
         vbat || expectedColor
-        4.0  || Color.parseColor(Sensor.GREEN)
-        3.5  || Color.parseColor(Sensor.GREEN)
+        4.0  || Color.parseColor(Constants.GREEN)
+        3.5  || Color.parseColor(Constants.GREEN)
         3.4  || Color.YELLOW
         3.2  || Color.RED
         3.1  || Color.RED

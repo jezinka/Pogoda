@@ -6,29 +6,10 @@ import android.text.TextUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 public class Sensor {
-
-    private static final String GREEN = "#008080";
-
-    private static final String PERCENT = "%";
-    private static final String LUX = " lx";
-    private static final String H_PA = " hPa";
-    private static final String V = " V";
-    private static final String SEPARATOR = "/";
-    private static final String C_DEGREE = "\u00B0C";
-
-    private static final double CRITICAL_BATTERY_VOLTAGE = 3.0;
-    private static final double GOOD_BATTERY_VOLTAGE = 3.4;
-    private static final double VOLTAGE_BUFFOR = 0.2;
-
-    private static DecimalFormat df = new DecimalFormat("####0.00");
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.CANADA);
 
     private long id;
     private String label;
@@ -48,19 +29,19 @@ public class Sensor {
     }
 
     public CharSequence getTemperature() {
-        return TextUtils.concat(String.valueOf(df.format(this.temperature)), C_DEGREE);
+        return TextUtils.concat(String.valueOf(Constants.df.format(this.temperature)), Constants.C_DEGREE);
     }
 
     public CharSequence getTimestamp() {
-        return formatter.format(this.timestamp);
+        return Constants.formatter.format(this.timestamp);
     }
 
     public CharSequence getHumidity() {
-        return TextUtils.concat(String.valueOf(this.humidity), PERCENT);
+        return TextUtils.concat(String.valueOf(this.humidity), Constants.PERCENT);
     }
 
     public CharSequence getLux() {
-        return TextUtils.concat(df.format(this.lux), LUX);
+        return TextUtils.concat(Constants.df.format(this.lux), Constants.LUX);
     }
 
     public boolean isBarPressureNull() {
@@ -68,25 +49,25 @@ public class Sensor {
     }
 
     public CharSequence getBarPressure() {
-        return TextUtils.concat(df.format(this.barPressure), H_PA);
+        return TextUtils.concat(Constants.df.format(this.barPressure), Constants.H_PA);
     }
 
     public CharSequence getVbatVreg() {
-        return TextUtils.concat(df.format(this.vbat), V, SEPARATOR, df.format(this.vreg), V);
+        return TextUtils.concat(Constants.df.format(this.vbat), Constants.V, Constants.SEPARATOR, Constants.df.format(this.vreg), Constants.V);
     }
 
     public int getBatteryColor() {
-        if (this.vbat > GOOD_BATTERY_VOLTAGE) {
-            return Color.parseColor(GREEN);
+        if (this.vbat > Constants.GOOD_BATTERY_VOLTAGE) {
+            return Color.parseColor(Constants.GREEN);
         }
-        if (this.vbat > CRITICAL_BATTERY_VOLTAGE + VOLTAGE_BUFFOR) {
+        if (this.vbat > Constants.CRITICAL_BATTERY_VOLTAGE + Constants.VOLTAGE_BUFFOR) {
             return Color.YELLOW;
         }
         return Color.RED;
     }
 
     public boolean batteryNeedRecharge() {
-        return this.vbat <= CRITICAL_BATTERY_VOLTAGE;
+        return this.vbat <= Constants.CRITICAL_BATTERY_VOLTAGE;
     }
 
     public boolean isSensorDead() {

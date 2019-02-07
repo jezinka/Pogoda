@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     NotificationService notificationService;
 
-    private static final int SPAN_COUNT = 2;
-
     private SensorsAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.list);
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, SPAN_COUNT));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, Constants.SPAN_COUNT));
         recyclerView.setHasFixedSize(true);
 
         swipeRefreshLayout = findViewById(R.id.swiperefresh);

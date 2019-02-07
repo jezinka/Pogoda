@@ -31,10 +31,6 @@ public class SensorIntentService extends IntentService {
     @Inject
     NotificationService notificationService;
 
-    private static final String BALKON = "Balkon";
-    private static final String ACTION_UPDATE_WIDGET = "com.projects.jezinka.pogoda.action.update";
-    public static final String ACTION_REFRESH_WIDGET = "com.projects.jezinka.pogoda.action.refresh";
-
     public SensorIntentService() {
         super("SensorIntentService");
         Scope appScope = Toothpick.openScope(this);
@@ -46,7 +42,7 @@ public class SensorIntentService extends IntentService {
 
     public static void startActionUpdateWidgets(Context context) {
         Intent intent = new Intent(context, SensorIntentService.class);
-        intent.setAction(ACTION_UPDATE_WIDGET);
+        intent.setAction(Constants.ACTION_UPDATE_WIDGET);
         context.startService(intent);
     }
 
@@ -54,7 +50,7 @@ public class SensorIntentService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_UPDATE_WIDGET.equals(action) || ACTION_REFRESH_WIDGET.equals(action)) {
+            if (Constants.ACTION_UPDATE_WIDGET.equals(action) || Constants.ACTION_REFRESH_WIDGET.equals(action)) {
                 refreshWidget();
             }
         }
@@ -100,7 +96,7 @@ public class SensorIntentService extends IntentService {
         notificationService.checkSensorsState(sensorList, this);
 
         for (Sensor sensor : sensorList) {
-            if (sensor.getLabel().equals(BALKON)) {
+            if (sensor.getLabel().equals(Constants.BALKON)) {
                 return sensor;
             }
         }

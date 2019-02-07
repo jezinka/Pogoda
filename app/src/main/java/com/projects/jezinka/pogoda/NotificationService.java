@@ -13,8 +13,6 @@ import java.util.List;
 
 public class NotificationService {
 
-    private static final String CHANNEL_ID = "S3N50R3K";
-
     public void createNotificationChannel(Context mContext) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -22,7 +20,7 @@ public class NotificationService {
             CharSequence name = Resources.getSystem().getString(R.string.sensor_channel);
             String description = Resources.getSystem().getString(R.string.sensor_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            NotificationChannel channel = new NotificationChannel(Constants.CHANNEL_ID, name, importance);
             channel.setDescription(description);
             NotificationManager notificationManager = mContext.getSystemService(NotificationManager.class);
             if (notificationManager != null) {
@@ -54,7 +52,7 @@ public class NotificationService {
     }
 
     private void sendNotification(Sensor sensor, String title, CharSequence message, Context mContext) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, Constants.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_battery)
                 .setContentTitle(title)
                 .setContentText(message)

@@ -21,7 +21,7 @@ public class SensorWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.sensor_widget, pendingIntent);
 
         Intent refreshIntent = new Intent(context, SensorIntentService.class);
-        refreshIntent.setAction(SensorIntentService.ACTION_REFRESH_WIDGET);
+        refreshIntent.setAction(Constants.ACTION_REFRESH_WIDGET);
         PendingIntent refreshPendingIntent = PendingIntent.getService(
                 context,
                 0,
