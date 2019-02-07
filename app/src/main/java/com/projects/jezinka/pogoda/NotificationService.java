@@ -11,6 +11,8 @@ import android.text.TextUtils;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class NotificationService {
 
     public void createNotificationChannel(Context mContext) {
@@ -25,6 +27,7 @@ public class NotificationService {
             NotificationManager notificationManager = mContext.getSystemService(NotificationManager.class);
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
+                Timber.i("Notification channel created");
             }
         }
     }
@@ -61,5 +64,6 @@ public class NotificationService {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(mContext);
         notificationManager.notify((int) sensor.getId(), mBuilder.build());
+        Timber.i("Notification send%s", message);
     }
 }

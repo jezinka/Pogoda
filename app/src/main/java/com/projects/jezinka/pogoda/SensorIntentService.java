@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.JsonElement;
@@ -22,6 +21,7 @@ import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 import toothpick.Scope;
 import toothpick.Toothpick;
 import toothpick.config.Module;
@@ -67,6 +67,7 @@ public class SensorIntentService extends IntentService {
 
                 JsonObject body = response.body();
                 if (body != null) {
+                    Timber.i("Server response with: %s", body.toString());
                     Sensor sensor = createSensorsFromJsonObject(body);
 
                     if (sensor != null) {
@@ -79,7 +80,7 @@ public class SensorIntentService extends IntentService {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Log.e("LOAD_DATA", t.getLocalizedMessage());
+                Timber.e(t.getLocalizedMessage());
                 Toast.makeText(mContext, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });

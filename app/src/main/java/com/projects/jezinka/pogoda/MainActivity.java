@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +24,7 @@ import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 import toothpick.Scope;
 import toothpick.Toothpick;
 import toothpick.config.Module;
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                 JsonObject body = response.body();
                 if (body != null) {
+                    Timber.i("Server response with: %s", body.toString());
                     List<Sensor> sensors = createSensorsFromJsonObject(body);
                     adapter.updateResults(sensors);
                     notificationService.checkSensorsState(sensors, mContext);
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
-                Log.e("LOAD_DATA", t.getLocalizedMessage());
+                Timber.e(t.getLocalizedMessage());
                 Toast.makeText(mContext, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
