@@ -3,22 +3,31 @@ package com.projects.jezinka.pogoda;
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.squareup.moshi.Json;
 
 import java.util.Date;
-import java.util.Map;
 
 public class Sensor {
 
     private long id;
     private String label;
+
+    @Json(name = "hum_temp")
     private double temperature;
+
+    @Json(name = "stamp")
     private long timestamp;
-    private int humidity;
+
+    @Json(name = "hum_hum")
+    private double humidity;
+
     private double lux;
+
+    @Json(name = "bar_pres_rel")
     private Double barPressure;
-    private double vbat, vreg;
+
+    private double vbat;
+    private double vreg;
 
     public long getId() {
         return this.id;
@@ -77,19 +86,18 @@ public class Sensor {
     public Sensor() {
     }
 
-    Sensor(Map.Entry<String, JsonElement> entry, String label) {
-
-        this.id = Long.valueOf(entry.getKey());
-        this.label = label;
-
-        JsonObject measurement = entry.getValue().getAsJsonObject();
-
-        this.temperature = measurement.get("hum_temp").getAsDouble();
-        this.timestamp = measurement.get("stamp").getAsLong() * 1000;
-        this.humidity = measurement.get("hum_hum").getAsInt();
-        this.lux = measurement.get("lux").getAsDouble();
-        this.barPressure = measurement.get("bar_pres_rel").isJsonNull() ? null : measurement.get("bar_pres_rel").getAsDouble();
-        this.vbat = measurement.get("vbat").getAsDouble();
-        this.vreg = measurement.get("vreg").getAsDouble();
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", temperature=" + temperature +
+                ", timestamp=" + timestamp +
+                ", humidity=" + humidity +
+                ", lux=" + lux +
+                ", barPressure=" + barPressure +
+                ", vbat=" + vbat +
+                ", vreg=" + vreg +
+                '}';
     }
 }

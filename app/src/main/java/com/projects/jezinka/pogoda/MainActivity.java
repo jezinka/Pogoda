@@ -12,12 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -73,16 +68,16 @@ public class MainActivity extends AppCompatActivity {
     private void sendQueryForData() {
         final Context mContext = this;
         WeatherService weatherService = WeatherService.retrofit.create(WeatherService.class);
-        final Call<JsonObject> call = weatherService.loadData();
+        final Call<List<Sensor>> call = weatherService.loadData();
 
-        call.enqueue(new Callback<JsonObject>() {
+        call.enqueue(new Callback<List<Sensor>>() {
             @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+            public void onResponse(@NonNull Call<List<Sensor>> call, @NonNull Response<List<Sensor>> response) {
+                List<Sensor> sensors = response.body();
 
-                JsonObject body = response.body();
-                if (body != null) {
-                    Timber.i("Server response with: %s", body.toString());
-                    List<Sensor> sensors = createSensorsFromJsonObject(body);
+                if (sensors != null) {
+                    Timber.i("Server response with: %s", sensors);
+
                     adapter.updateResults(sensors);
                     notificationService.checkSensorsState(sensors, mContext);
                 }
@@ -90,23 +85,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<Sensor>> call, @NonNull Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
                 Timber.e(t.getLocalizedMessage());
                 Toast.makeText(mContext, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private List<Sensor> createSensorsFromJsonObject(JsonObject body) {
-        List<Sensor> sensors = new ArrayList<>();
-
-        for (Map.Entry<String, JsonElement> entry : body.getAsJsonObject(getString(R.string.readings)).entrySet()) {
-            String label = SensorJsonHelper.getLabelFromJson(body, entry.getKey());
-            sensors.add(new Sensor(entry, label));
-        }
-
-        return sensors;
     }
 
     @Override

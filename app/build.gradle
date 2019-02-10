@@ -35,8 +35,9 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.moshi:moshi:1.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
 
     implementation 'com.github.stephanenicolas.toothpick:toothpick-runtime:1.1.3'
     annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.1.3'
