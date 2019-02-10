@@ -29,6 +29,7 @@ public class SensorIntentService extends IntentService {
     public SensorIntentService() {
         super("SensorIntentService");
         Scope appScope = Toothpick.openScope(this);
+        Timber.plant(new Timber.DebugTree());
         appScope.installModules(new Module() {{
             bind(NotificationService.class).toInstance(new NotificationService());
         }});

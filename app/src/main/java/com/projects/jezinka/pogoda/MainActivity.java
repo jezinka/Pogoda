@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
 
+        Timber.plant(new Timber.DebugTree());
+
         Scope appScope = Toothpick.openScope(this);
         appScope.installModules(new Module() {{
             bind(NotificationService.class).toInstance(new NotificationService());
