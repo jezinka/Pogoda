@@ -3,7 +3,6 @@ package com.projects.jezinka.pogoda;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -19,8 +18,8 @@ public class NotificationService {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = Resources.getSystem().getString(R.string.sensor_channel);
-            String description = Resources.getSystem().getString(R.string.sensor_description);
+            CharSequence name = mContext.getResources().getString(R.string.sensor_channel);
+            String description = mContext.getResources().getString(R.string.sensor_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(Constants.CHANNEL_ID, name, importance);
             channel.setDescription(description);
